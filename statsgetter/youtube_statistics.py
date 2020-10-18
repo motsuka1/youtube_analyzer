@@ -6,7 +6,7 @@ class YTstats:
         self.api_key = api_key
         self.channel_username = channel_username
         if channel_id == None:
-            self.channel_id = self.get_channel_id()
+            self.channel_id = self.get_channel_id_from_username()
         else:
             self.channel_id = channel_id
 
@@ -16,7 +16,7 @@ class YTstats:
         data = json.loads(json_url.text)
         return data
 
-    def get_channel_id(self):
+    def get_channel_id_from_username(self):
         url = f'https://www.googleapis.com/youtube/v3/channels?part=id&forUsername={self.channel_username}&key={self.api_key}&fields=items(id)'
         json_url = requests.get(url)
         data = json.loads(json_url.text)
