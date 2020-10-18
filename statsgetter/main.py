@@ -11,7 +11,7 @@ API_KEY = env('API_KEY')
 Change below accordingly for now!
 get channel_title from input
 '''
-channel_title = ""
+channel_title = "東海オンエア"
 
 # get channel_id or channel_username by running selenium
 ytscraper = YTscraper(channel_title)

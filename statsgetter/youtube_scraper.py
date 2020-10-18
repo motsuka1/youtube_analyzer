@@ -16,19 +16,13 @@ class YTscraper:
         # chrome_options.add_argument(' -- incognito')
         driver = webdriver.Chrome(chrome_options=chrome_options) #executable_path=os.environ.get("CHROMEDRIVER_PATH"),
 
-        # Now you can start using Selenium
-        driver.get('https://www.youtube.com/')
-
-        driver.implicitly_wait(3)
-
-        search_box = driver.find_element_by_xpath('//input[@id="search"]')
-
-        # type channel title in the search box
-        search_box.send_keys(self.channel_title)
-
-        # click search button
-        search_btn = driver.find_element_by_xpath('//*[@id="search-icon-legacy"]')
-        search_btn.click()
+        # get to the search result in youtube
+        '''
+        might be faster to use beautiful soup.
+        only concern is that I might need 'scrolling' to implement the feature to get data of seo
+        '''
+        url = "https://www.youtube.com/results?search_query=" + self.channel_title
+        driver.get(url)
 
         driver.implicitly_wait(3)
 
