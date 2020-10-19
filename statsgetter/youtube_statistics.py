@@ -13,7 +13,7 @@ class YTstats:
     def get_channel_statistics(self):
         url = f'https://www.googleapis.com/youtube/v3/channels?id={self.channel_id}&key={self.api_key}&part=statistics,snippet&fields=items(id,snippet(title,publishedAt),statistics(viewCount,subscriberCount,videoCount))'
         json_url = requests.get(url)
-        data = json.loads(json_url.text)
+        data = json.loads(json_url.text)["items"]
         return data
 
     def get_channel_id_from_username(self):
