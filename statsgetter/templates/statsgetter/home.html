@@ -13,7 +13,12 @@
 
 <main role="main" class="flex-shrink-0">
   <div class="container">
-    
+    <p>チャンネル名：{{ channel_stats.title }}</p>
+    <p>id：{{ channel_stats.id }}</p>
+    <p>登録日：{{ channel_stats.registered_date }}</p>
+    <p>チャンネル登録者数：{{ channel_stats.subscriberCount }}</p>
+    <p>総視聴回数：{{ channel_stats.viewCount }}</p>
+    <p>総動画数：{{ channel_stats.videoCount }}</p>
   </div>
 </main>
 {% endblock content %}
