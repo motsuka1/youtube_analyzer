@@ -16,7 +16,6 @@ class YoutubeBundle:
         Change below accordingly for now!
         get channel_title from input
         '''
-        # channel_title = "東海オンエア"
 
         # get channel_id or channel_username by running selenium
         ytscraper = YTscraper(self.channel_title)

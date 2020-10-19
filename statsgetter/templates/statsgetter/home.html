@@ -4,8 +4,9 @@
   <div class="container">
     <h1>Youtube Analyzer</h1>
     <p class="lead text-muted">チャンネル名を入力して、統計データを得よう！</p>
-    <form class="mt-2 mt-md-0 text-center">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+    <form class="mt-2 mt-md-0 text-center" method="POST">
+      {% csrf_token %}
+      <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2" type="submit">Search</button>
     </form>
   </div>
