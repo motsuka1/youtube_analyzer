@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .youtube_bundle import YoutubeBundle
 from .models import *
 import datetime
+from .forms import SearchForm
 
 # Create your views here.
 def home(request):
@@ -22,7 +23,7 @@ def home(request):
                 results = yt.get_stats_bundle()
                 for result in results:
                     registered_date = datetime.datetime.strptime(result["snippet"]["publishedAt"], "%Y-%m-%dT%H:%M:%SZ")
-                    registered_date = registered_date.strftime("%Y/%m/%d")
+                    registered_date = registered_date.strftime("%Y-%m-%d")
                     channel_stats = {
                         'title' : result["snippet"]["title"],
                         'id' : result["id"],
@@ -32,5 +33,15 @@ def home(request):
                         'videoCount' : result["statistics"]["videoCount"],
                     }
                     channels_stats.append(channel_stats)
+
+                    # store channel data in the database
+                    youtube_channel = YoutubeChannel.objects.get_or_create(title=channel_stats["title"], channel_id=channel_stats["id"])
+
+                    # store stats data in the database
+                    new_stats = Statistics(subscriber_count=channel_stats["subscriberCount"], view_count=channel_stats["viewCount"], video_count=channel_stats["videoCount"], channel_registered=registered_date)
+
+                    channel = YoutubeChannel.objects.get(channel_id=channel_stats["id"])
+                    new_stats.channel = channel
+                    new_stats.save()
     context = {'channels_stats': channels_stats}
     return render(request, 'statsgetter/home.html', context)
