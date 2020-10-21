@@ -16,6 +16,7 @@ class Statistics(models.Model):
     video_count = models.IntegerField(default=0)
     channel_registered = models.DateField()
     date_added = models.DateTimeField(auto_now_add=True)
+    transaction_id = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.channel.title
+        return str(self.transaction_id)
