@@ -59,7 +59,7 @@ def home(request):
 
                     new_stats.transaction_id = last_transaction_id + 1
                     new_stats.save()
-                    
+
     context = {'channels_stats': channels_stats}
     return render(request, 'statsgetter/home.html', context)
 
@@ -88,12 +88,17 @@ def export_excel(request):
     # store data
     row = 2
     for data in stats_latest:
+        # adjust datetime to excel format
+        channel_registered_excel = data.channel_registered.strftime('%m/%d/%Y')
+        date_added_excel = data.date_added.strftime('%m/%d/%Y %H:%M')
+
+        # store data
         ws.cell(row=row, column=1).value = data.channel.title
-        ws.cell(row=row, column=2).value = data.channel_registered
+        ws.cell(row=row, column=2).value = channel_registered_excel
         ws.cell(row=row, column=3).value = data.subscriber_count
         ws.cell(row=row, column=4).value = data.view_count
         ws.cell(row=row, column=5).value = data.video_count
-        ws.cell(row=row, column=6).value = data.date_added
+        ws.cell(row=row, column=6).value = date_added_excel
         row += 1
 
     wb.save(response)
