@@ -4,7 +4,7 @@ from .youtube_bundle import YoutubeBundle
 from .models import *
 import datetime
 import openpyxl
-
+from django.utils.timezone import localtime
 
 # Create your views here.
 def home(request):
@@ -90,7 +90,7 @@ def export_excel(request):
     for data in stats_latest:
         # adjust datetime to excel format
         channel_registered_excel = data.channel_registered.strftime('%m/%d/%Y')
-        date_added_excel = data.date_added.strftime('%m/%d/%Y %H:%M')
+        date_added_excel = localtime(data.date_added).strftime('%m/%d/%Y %H:%M')
 
         # store data
         ws.cell(row=row, column=1).value = data.channel.title
