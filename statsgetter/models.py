@@ -3,7 +3,6 @@ from django.db import models
 # Create your models here.
 class YoutubeChannel(models.Model):
     title = models.CharField(max_length=100)
-    # nick_name = models.CharField(max_length=100)
     channel_id = models.CharField(max_length=25)
 
     def __str__(self):
@@ -20,3 +19,10 @@ class Statistics(models.Model):
 
     def __str__(self):
         return str(self.transaction_id)
+
+class Nickname(models.Model):
+    channel = models.ForeignKey(YoutubeChannel, on_delete=models.CASCADE)
+    nickname = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return self.nickname

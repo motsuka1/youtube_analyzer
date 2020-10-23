@@ -60,6 +60,13 @@ def home(request):
                     new_stats.transaction_id = last_transaction_id + 1
                     new_stats.save()
 
+                    # store nickname data in the database
+                    if channel_title != channel_stats["title"]:
+                        nickname = Nickname.objects.get_or_create(
+                        nickname = channel_title,
+                        channel = channel
+                        )
+
     context = {'channels_stats': channels_stats}
     return render(request, 'statsgetter/home.html', context)
 
