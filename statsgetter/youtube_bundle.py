@@ -13,11 +13,15 @@ class YoutubeBundle:
 
         API_KEY = env('API_KEY')
 
-        # check if channel_title exists in the database
+        # check if searched value matches with channel_title or nickname in the database
         # if so, retrieve channel_id
         if YoutubeChannel.objects.filter(title__exact=self.channel_title).exists():
             youtube_channel = YoutubeChannel.objects.filter(title__exact=self.channel_title).get()
             channel_id = youtube_channel.channel_id
+            channel_username = None
+        elif Nickname.objects.filter(nickname__exact=self.channel_title).exists():
+            nickname = Nickname.objects.filter(nickname__exact=self.channel_title).get()
+            channel_id = nickname.channel.channel_id
             channel_username = None
         else:
             # get channel_id or channel_username by running selenium
