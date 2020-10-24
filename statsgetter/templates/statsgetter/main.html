@@ -47,7 +47,9 @@
         </li>
       </ul>
       <form class="form-inline mt-2 mt-md-0">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+        <span>こんにちは、{{request.user}}さん</span>
+        <a class="btn btn-outline-success my-2 my-sm-0" type="submit" href="{% url 'logout' %}">Logout</a>
+        <a class="btn btn-outline-success my-2 my-sm-0" type="submit" href="{% url 'login' %}">Login</a>
       </form>
     </div>
   </nav>
