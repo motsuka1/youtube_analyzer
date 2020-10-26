@@ -51,6 +51,7 @@ def logout(request):
 
 def home(request):
     channels_stats = []
+    nicknames = []
     if request.method == "POST":
         # get searched channel titles and make a list of channel titles
         channel_titles_str = request.POST['search']
@@ -108,8 +109,10 @@ def home(request):
                         nickname = channel_title,
                         channel = channel
                         )
+                        # append to the list to show on the home page
+                        nicknames.append(channel_title)
 
-    context = {'channels_stats': channels_stats}
+    context = {'channels_stats': channels_stats, 'nicknames': nicknames}
     return render(request, 'statsgetter/home.html', context)
 
 @login_required(login_url='login')
