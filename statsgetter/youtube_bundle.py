@@ -29,7 +29,10 @@ class YoutubeBundle:
             channel_data = ytscraper.get_channel_id_or_username_from_title()
 
             # identify if returned data is channel_id or channel_username
-            if channel_data[0] == True:
+            if channel_data == None:
+                channel_id = None
+                channel_username = None
+            elif channel_data[0] == True:
                 channel_id = channel_data[1]
                 channel_username = None
             else:

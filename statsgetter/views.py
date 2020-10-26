@@ -52,6 +52,7 @@ def logout(request):
 def home(request):
     channels_stats = []
     nicknames = []
+    no_such_element_errors = []
     if request.method == "POST":
         # get searched channel titles and make a list of channel titles
         channel_titles_str = request.POST['search']
@@ -70,49 +71,52 @@ def home(request):
             for channel_title in channel_titles:
                 yt = YoutubeBundle(channel_title)
                 results = yt.get_stats_bundle()
-                for result in results:
-                    registered_date = datetime.datetime.strptime(result["snippet"]["publishedAt"], "%Y-%m-%dT%H:%M:%SZ")
-                    registered_date = registered_date.strftime("%Y-%m-%d")
-                    channel_stats = {
-                        'title' : result["snippet"]["title"],
-                        'id' : result["id"],
-                        'registered_date' : registered_date,
-                        'subscriberCount' : result["statistics"]["subscriberCount"],
-                        'viewCount' : result["statistics"]["viewCount"],
-                        'videoCount' : result["statistics"]["videoCount"],
-                    }
-                    channels_stats.append(channel_stats)
+                if results == None:
+                    no_such_element_errors.append("「" + channel_title + "」" + "でチャンネルが見つかりませんでした。")
+                else:
+                    for result in results:
+                        registered_date = datetime.datetime.strptime(result["snippet"]["publishedAt"], "%Y-%m-%dT%H:%M:%SZ")
+                        registered_date = registered_date.strftime("%Y-%m-%d")
+                        channel_stats = {
+                            'title' : result["snippet"]["title"],
+                            'id' : result["id"],
+                            'registered_date' : registered_date,
+                            'subscriberCount' : result["statistics"]["subscriberCount"],
+                            'viewCount' : result["statistics"]["viewCount"],
+                            'videoCount' : result["statistics"]["videoCount"],
+                        }
+                        channels_stats.append(channel_stats)
 
-                    # store channel data in the database
-                    youtube_channel = YoutubeChannel.objects.get_or_create(
-                        title=channel_stats["title"],
-                        channel_id=channel_stats["id"]
-                        )
+                        # store channel data in the database
+                        youtube_channel = YoutubeChannel.objects.get_or_create(
+                            title=channel_stats["title"],
+                            channel_id=channel_stats["id"]
+                            )
 
-                    # store stats data in the database
-                    new_stats = Statistics(
-                        subscriber_count=channel_stats["subscriberCount"],
-                        view_count=channel_stats["viewCount"],
-                        video_count=channel_stats["videoCount"],
-                        channel_registered=registered_date
-                        )
+                        # store stats data in the database
+                        new_stats = Statistics(
+                            subscriber_count=channel_stats["subscriberCount"],
+                            view_count=channel_stats["viewCount"],
+                            video_count=channel_stats["videoCount"],
+                            channel_registered=registered_date
+                            )
 
-                    channel = YoutubeChannel.objects.get(channel_id=channel_stats["id"])
-                    new_stats.channel = channel
+                        channel = YoutubeChannel.objects.get(channel_id=channel_stats["id"])
+                        new_stats.channel = channel
 
-                    new_stats.transaction_id = last_transaction_id + 1
-                    new_stats.save()
+                        new_stats.transaction_id = last_transaction_id + 1
+                        new_stats.save()
 
-                    # store nickname data in the database
-                    if channel_title != channel_stats["title"]:
-                        nickname = Nickname.objects.get_or_create(
-                        nickname = channel_title,
-                        channel = channel
-                        )
-                        # append to the list to show on the home page
-                        nicknames.append(channel_title)
+                        # store nickname data in the database
+                        if channel_title != channel_stats["title"]:
+                            nickname = Nickname.objects.get_or_create(
+                            nickname = channel_title,
+                            channel = channel
+                            )
+                            # append to the list to show on the home page
+                            nicknames.append(channel_title)
 
-    context = {'channels_stats': channels_stats, 'nicknames': nicknames}
+    context = {'channels_stats': channels_stats, 'nicknames': nicknames, 'no_such_element_errors': no_such_element_errors}
     return render(request, 'statsgetter/home.html', context)
 
 @login_required(login_url='login')

@@ -9,6 +9,7 @@
       <input class="form-control mr-sm-2" type="text" name="search" placeholder="ヒカキン、フィッシャーズ、東海オンエア" aria-label="Search">
       <button class="btn btn-outline-success my-2" type="submit">Search</button>
     </form>
+    <p>{% for no_such_element_error in no_such_element_errors %}{{no_such_element_error}}{% endfor %}</p>
     <p>{{request.user}}さんがこのサイトで{% for nickname in nicknames %}「{{nickname}}」{% endfor %}と検索した一番初めの人物です！</p>
     <p>キーワードが始めて検索されると、システムが学習をし、二回目以降の検索スピードを大幅に向上します！</p>
     <p>試しに{% for nickname in nicknames %}「{{nickname}}」{% endfor %}でもう一度検索してみてください！</p>

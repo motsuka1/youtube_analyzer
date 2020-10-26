@@ -1,5 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import NoSuchElementException
+
 import os
 
 class YTscraper:
@@ -27,12 +29,15 @@ class YTscraper:
         driver.implicitly_wait(3)
 
         # get either channel_id or channel_username from channel_url
-        channel_url = driver.find_element_by_css_selector('#contents > ytd-channel-renderer').find_element_by_xpath(".//div/div/a").get_attribute("href")
-        if "youtube.com/channel/" in channel_url:
-            channel_id = channel_url.split("youtube.com/channel/", 1)[1]
-            driver.quit()
-            return [True, channel_id]
-        else:
-            channel_username = channel_url.split("youtube.com/user/", 1)[1]
-            driver.quit()
-            return [False, channel_username]
+        try:
+            channel_url = driver.find_element_by_css_selector('#contents > ytd-channel-renderer').find_element_by_xpath(".//div/div/a").get_attribute("href")
+            if "youtube.com/channel/" in channel_url:
+                channel_id = channel_url.split("youtube.com/channel/", 1)[1]
+                driver.quit()
+                return [True, channel_id]
+            else:
+                channel_username = channel_url.split("youtube.com/user/", 1)[1]
+                driver.quit()
+                return [False, channel_username]
+        except NoSuchElementException:
+            return 
