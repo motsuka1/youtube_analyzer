@@ -9,28 +9,51 @@
       <input class="form-control mr-sm-2" type="text" name="search" placeholder="ヒカキン、フィッシャーズ、東海オンエア" aria-label="Search">
       <button class="btn btn-outline-success my-2" type="submit">Search</button>
     </form>
-    <p>{% for no_such_element_error in no_such_element_errors %}{{no_such_element_error}}{% endfor %}</p>
-    <p>{{request.user}}さんがこのサイトで{% for nickname in nicknames %}「{{nickname}}」{% endfor %}と検索した一番初めの人物です！</p>
-    <p>キーワードが始めて検索されると、システムが学習をし、二回目以降の検索スピードを大幅に向上します！</p>
-    <p>試しに{% for nickname in nicknames %}「{{nickname}}」{% endfor %}でもう一度検索してみてください！</p>
+    <div class="search-msg">
+      <div class="error-msg">
+        <p>{% for no_such_element_error in no_such_element_errors %}{{no_such_element_error}}{% endfor %}</p>
+      </div>
+      <div class="nickname-msg" id="nickname-msg">
+        <p>{{request.user}}さんがこのサイトで{% for nickname in nicknames %}「{{nickname}}」{% endfor %}と検索した一番初めの人物です！<br>
+        キーワードが初めて検索されると、システムが学習をし、二回目以降の検索スピードを大幅に向上します！<br>
+        試しに{% for nickname in nicknames %}「{{nickname}}」{% endfor %}でもう一度検索してみてください！</p>
+      </div>
+    </div>
   </div>
 </section>
 
 <main role="main" class="flex-shrink-0">
-  <a href="{% url 'export-excel' %}" class="btn btn-primary">Download Excel</a>
   <div class="container">
-    <div class="row">
+    <div class="row justify-content-end" id="excel">
+      <a href="{% url 'export-excel' %}" class="btn btn-primary">Download Excel</a>
+    </div>
+    <div class="row justify-content-center">
       {% for channel_stats in channels_stats %}
-      <div class="col-lg-4 box-element">
+      <div class="col-lg-4">
         <p>チャンネル名：{{ channel_stats.title }}</p>
         <!-- <p>id：{{ channel_stats.id }}</p> -->
         <p>チャンネル登録日：{{ channel_stats.registered_date }}</p>
         <p>チャンネル登録者数：{{ channel_stats.subscriberCount }}</p>
         <p>総視聴回数：{{ channel_stats.viewCount }}</p>
         <p>総動画数：{{ channel_stats.videoCount }}</p>
+        <br>
       </div>
       {% endfor %}
     </div>
   </div>
 </main>
+<script type='text/javascript'>
+  var nicknames = {{ nicknames|safe }};
+  console.log(nicknames);
+  console.log(nicknames.length);
+  if(nicknames.length === 0){
+    document.getElementById('nickname-msg').innerHTML = '';
+  }
+
+  var channels_stats = {{ channels_stats|safe }};
+  if(channels_stats.length === 0){
+    document.getElementById('excel').innerHTML = '';
+  }
+
+</script>
 {% endblock content %}

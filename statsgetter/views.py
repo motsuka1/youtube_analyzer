@@ -109,13 +109,17 @@ def home(request):
 
                         # store nickname data in the database
                         if channel_title != channel_stats["title"]:
-                            nickname = Nickname.objects.get_or_create(
-                            nickname = channel_title,
-                            channel = channel
-                            )
-                            # append to the list to show on the home page
-                            nicknames.append(channel_title)
+                            if Nickname.objects.filter(nickname=channel_title).exists():
+                                pass
+                            else:
+                                nickname = Nickname.objects.create(
+                                    nickname = channel_title,
+                                    channel = channel
+                                )
+                                # append to the list to show on the home page
+                                nicknames.append(channel_title)
 
+    print(nicknames)
     context = {'channels_stats': channels_stats, 'nicknames': nicknames, 'no_such_element_errors': no_such_element_errors}
     return render(request, 'statsgetter/home.html', context)
 
