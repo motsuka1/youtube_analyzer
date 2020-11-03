@@ -1,4 +1,5 @@
 {% extends "statsgetter/main.html" %}
+{% load humanize %}
 {% block content %}
 <section class="jumbotron text-center">
   <div class="container">
@@ -33,9 +34,9 @@
         <p>チャンネル名：{{ channel_stats.title }}</p>
         <!-- <p>id：{{ channel_stats.id }}</p> -->
         <p>チャンネル登録日：{{ channel_stats.registered_date }}</p>
-        <p>チャンネル登録者数：{{ channel_stats.subscriberCount }}</p>
-        <p>総視聴回数：{{ channel_stats.viewCount }}</p>
-        <p>総動画数：{{ channel_stats.videoCount }}</p>
+        <p>チャンネル登録者数：{{ channel_stats.subscriberCount| intcomma }}</p>
+        <p>総視聴回数：{{ channel_stats.viewCount| intcomma }}</p>
+        <p>総動画数：{{ channel_stats.videoCount| intcomma }}</p>
         <br>
       </div>
       {% endfor %}

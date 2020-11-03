@@ -81,9 +81,9 @@ def home(request):
                             'title' : result["snippet"]["title"],
                             'id' : result["id"],
                             'registered_date' : registered_date,
-                            'subscriberCount' : result["statistics"]["subscriberCount"],
-                            'viewCount' : result["statistics"]["viewCount"],
-                            'videoCount' : result["statistics"]["videoCount"],
+                            'subscriberCount' : int(result["statistics"]["subscriberCount"]),
+                            'viewCount' : int(result["statistics"]["viewCount"]),
+                            'videoCount' : int(result["statistics"]["videoCount"]),
                         }
                         channels_stats.append(channel_stats)
 
