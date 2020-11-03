@@ -50,7 +50,7 @@
 
       <ul class="navbar-nav justify-content-end">
         <li class="nav-item">
-          <p class="greet-user m-2 navbar-text">こんにちは、{{request.user}}さん</p>
+          <p class="greet-user m-2 navbar-text">こんにちは、{{ request.user.username|default:"ゲスト" }}さん</p>
         </li>
         <li class="nav-item" id="logout">
           <a class="btn btn-outline-success m-2" type="submit" href="{% url 'logout' %}">Logout</a>
