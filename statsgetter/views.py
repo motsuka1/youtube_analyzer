@@ -49,6 +49,10 @@ def logout(request):
     auth_logout(request)
     return redirect('login')
 
+def price(request):
+    context = {}
+    return render(request, 'statsgetter/price.html', context)
+
 def home(request):
     channels_stats = []
     nicknames = []
