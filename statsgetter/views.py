@@ -41,7 +41,7 @@ def login(request):
                 auth_login(request, user)
                 return redirect('home')
             else:
-                messages.info(request, 'ユーザーネームかパスワードが違っています')
+                messages.info(request, 'ユーザーネームかパスワードが間違っています')
         context = {}
         return render(request, 'statsgetter/login.html', context)
 
