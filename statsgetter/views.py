@@ -41,13 +41,17 @@ def login(request):
                 auth_login(request, user)
                 return redirect('home')
             else:
-                messages.info(request, 'ユーザーネームかパスワードが違っています')
+                messages.info(request, 'ユーザーネームかパスワードが間違っています')
         context = {}
         return render(request, 'statsgetter/login.html', context)
 
 def logout(request):
     auth_logout(request)
     return redirect('login')
+
+def price(request):
+    context = {}
+    return render(request, 'statsgetter/price.html', context)
 
 def home(request):
     channels_stats = []
@@ -81,9 +85,9 @@ def home(request):
                             'title' : result["snippet"]["title"],
                             'id' : result["id"],
                             'registered_date' : registered_date,
-                            'subscriberCount' : result["statistics"]["subscriberCount"],
-                            'viewCount' : result["statistics"]["viewCount"],
-                            'videoCount' : result["statistics"]["videoCount"],
+                            'subscriberCount' : int(result["statistics"]["subscriberCount"]),
+                            'viewCount' : int(result["statistics"]["viewCount"]),
+                            'videoCount' : int(result["statistics"]["videoCount"]),
                         }
                         channels_stats.append(channel_stats)
 
@@ -109,13 +113,17 @@ def home(request):
 
                         # store nickname data in the database
                         if channel_title != channel_stats["title"]:
-                            nickname = Nickname.objects.get_or_create(
-                            nickname = channel_title,
-                            channel = channel
-                            )
-                            # append to the list to show on the home page
-                            nicknames.append(channel_title)
+                            if Nickname.objects.filter(nickname=channel_title).exists():
+                                pass
+                            else:
+                                nickname = Nickname.objects.create(
+                                    nickname = channel_title,
+                                    channel = channel
+                                )
+                                # append to the list to show on the home page
+                                nicknames.append(channel_title)
 
+    print(nicknames)
     context = {'channels_stats': channels_stats, 'nicknames': nicknames, 'no_such_element_errors': no_such_element_errors}
     return render(request, 'statsgetter/home.html', context)
 
