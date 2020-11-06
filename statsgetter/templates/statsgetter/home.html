@@ -3,8 +3,11 @@
 {% block content %}
 <section class="jumbotron text-center">
   <div class="container">
-    <h1>Youtube Analyzer</h1>
-    <p class="lead text-muted">チャンネル名を入力して、統計データを得よう！</p>
+    <h1>Youtubeはサイエンスだ！</h1>
+    <p class="lead text-muted">
+      データを用いたチャンネル作りを支援します。
+      <br>
+      チャンネル名を入力して、統計データを得よう！</p>
     <form class="mt-2 mt-md-0 text-center" method="POST">
       {% csrf_token %}
       <input class="form-control mr-sm-2" type="text" name="search" placeholder="ヒカキン、フィッシャーズ、東海オンエア" aria-label="Search">
@@ -28,9 +31,10 @@
     <div class="row justify-content-end" id="excel">
       <a href="{% url 'export-excel' %}" class="btn btn-primary">Download Excel</a>
     </div>
-    <div class="row justify-content-center">
+    <br>
+    <div class="row justify-content-start">
       {% for channel_stats in channels_stats %}
-      <div class="col-lg-4">
+      <div class="col-lg-4 text-center">
         <p>チャンネル名：{{ channel_stats.title }}</p>
         <!-- <p>id：{{ channel_stats.id }}</p> -->
         <p>チャンネル登録日：{{ channel_stats.registered_date }}</p>
