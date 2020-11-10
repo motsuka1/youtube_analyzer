@@ -1,14 +1,16 @@
 {% extends "statsgetter/main.html" %}
 {% load humanize %}
+{% load static %}
 {% block content %}
 <section class="jumbotron text-center">
   <div class="container">
-    <h1>Youtube Analyzer</h1>
-    <p class="lead text-muted">チャンネル名を入力して、統計データを得よう！</p>
+    <h1>データでチャンネル育成</h1>
+    <p class="lead text-muted">データを用いたチャンネル作りを支援します。<hiddn>
+    チャンネル名を入力して、統計データを得よう！</p>
     <form class="mt-2 mt-md-0 text-center" method="POST">
       {% csrf_token %}
       <input class="form-control mr-sm-2" type="text" name="search" placeholder="ヒカキン、フィッシャーズ、東海オンエア" aria-label="Search">
-      <button class="btn btn-outline-success my-2" type="submit">Search</button>
+      <button class="btn btn-outline-success my-2" type="submit">検索</button>
     </form>
     <div class="search-msg">
       <div class="error-msg">
@@ -26,11 +28,12 @@
 <main role="main" class="flex-shrink-0">
   <div class="container">
     <div class="row justify-content-end" id="excel">
-      <a href="{% url 'export-excel' %}" class="btn btn-primary">Download Excel</a>
+      <a href="{% url 'export-excel' %}" class="btn btn-primary excel-btn">Excel ダウンロード</a>
     </div>
-    <div class="row justify-content-center">
+    <br>
+    <div class="row justify-content-start">
       {% for channel_stats in channels_stats %}
-      <div class="col-lg-4">
+      <div class="col-lg-4 text-center">
         <p>チャンネル名：{{ channel_stats.title }}</p>
         <!-- <p>id：{{ channel_stats.id }}</p> -->
         <p>チャンネル登録日：{{ channel_stats.registered_date }}</p>
@@ -42,6 +45,164 @@
       {% endfor %}
     </div>
   </div>
+
+  <!-- Marketing messaging and featurettes
+  ================================================== -->
+  <!-- Wrap the rest of the page in another container to center all the content. -->
+  <section class="section1">
+    <div class="container">
+      <!-- Three columns of text below the carousel -->
+      <h2 class="text-center">こんな悩みはありませんか？</h2>
+      <br>
+      <div class="row">
+        <div class="col-lg-4 text-center">
+          <img class="rounded-circle up" src="{% static 'images/up.png' %}" alt="Generic placeholder image" width="140" height="140">
+          <h3>チャンネル登録者数を<br>伸ばしたい</h3>
+          <p class="problem-text">広告が付けられる1000人、大台の1万人、銀のたてを目指して10万人、誰もが憧れる100万人！掲げている目標数に早く到達したいが、思うように伸びていかない...</p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4 text-center">
+          <img class="rounded-circle famous" src="{% static 'images/famous.png' %}" alt="Generic placeholder image" width="140" height="140">
+          <h3>もっと有名になりたい</h3>
+          <br class="br-pc">
+          <p class="problem-text">雑誌掲載、テレビ出演、人気芸能人やYouTuberと一緒に仕事！有名になってこんな夢叶えてみたいけど、今のままで達成できるかな...</p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4 text-center">
+          <img class="rounded-circle money" src="{% static 'images/money.png' %}" alt="Generic placeholder image" width="140" height="140">
+          <h3>広告収入を増やしたい</h3>
+          <br class="br-pc">
+          <p class="problem-text">日本のトップYouTuberは数億円稼いでいるという噂も！そのくらい大きな収入を得られるようになりたいけど、今は程遠い...</p>
+        </div><!-- /.col-lg-4 -->
+      </div><!-- /.row -->
+    </div>
+  </section>
+    <!-- START THE FEATURETTES -->
+    <!-- <hr class="featurette-divider"> -->
+  <section class="section2">
+    <div class="container">
+      <br>
+      <h2 class="text-center affinity-heading">チャンネルが伸びないのは<br class="br-sp">無理もありません</h2>
+      <br>
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h3 class="featurette-heading text-center affinity-subheading">登録者数を伸ばすのは難しくなっている</h3>
+          <p>　YouTube Studioを眺めながら、なぜ登録者数が思うように伸びないんだ...と悩むのも無理もありません。夢のあるYouTube市場に多くの人が参入して来たことにより、登録者数を伸ばすのが年々難しくなっているからです。他の多くの若手YouTuberもあなたと同じように悩んでいます。<br>　しかし中には後発ながら急成長を果たしているチャンネルもあります。彼らのように競争の激しいYouTube市場で登録者数を伸ばすにはどうすれば良いでしょうか？</p>
+        </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+        </div>
+      </div>
+    </div>
+  </section>
+    <!-- <hr class="featurette-divider"> -->
+  <section class="section3">
+    <div class="container">
+      <br>
+      <h2 class="text-center solution-heading">現在のYouTube市場で登録者数を伸ばすには？</h2>
+      <br>
+
+      <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+          <h3 class="featurette-heading text-center solution-subheading">1. ジャンルを定め、差別化を図る</h3>
+          <p>　もう一昔前のようにただ面白い動画をアップしていれば伸びる時代ではありません。ジャンルを定めないと大物YouTuberに勝つのは至難の技です。考えてみてください。ジャンルが絞られていない登録者100万人と登録者1万人の2つのチャンネルがあった場合、あなたならどちらのチャンネルを選び視聴しますか？多くの人が登録者100万人のチャンネルを選ぶと思います。では、仮にあなたが将棋に興味がある視聴者だとします。ジャンルが絞られていない登録者登録者100万人のチャンネルと登録者1万人の将棋系チャンネル2つを比べた時、今回はチャンネルと登録者1万人の将棋系チャンネルを選ぶ人が多いのではないでしょうか。<br>　ジャンルを定めずに2万人もいる日本のYoutuberの中から見つけられるのは難しいでしょう。まずはジャンルを定め、他のチャンネルとの差別化を図りましょう。</p>
+        </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section4">
+    <div class="container">
+      <br>
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h3 class="featurette-heading text-center solution-subheading">2. 多くのYouTuberが知らない秘密！<br>視聴者の「期待値要素」を調べる</h2>
+          <p>　視聴者の期待値要素とは何か知っていますか？視聴者はある程度の期待値を持っています。例えば、一昔前なら動画の画質が低くても、コンテンツが面白ければ視聴者は楽しんでいたかもしれません。しかし、YouTubeができて15年が経った今、視聴者の画質に対する期待値は上がっており、極端に画質の悪い動画はそれだけで見られないでしょう。期待値要素は動画の画質だけではありません。ジャンルによって様々な期待値要素が存在しています。2020年現在、料理系のチャンネルでは音も期待値要素です。包丁で野菜を切る音、水が鍋の中で沸騰している音。こういう音を意識したチャンネルが伸びています。<br>　特定のジャンルの中で、どんなチャンネルが伸びているか？そのジャンルの中で、伸びているチャンネルの共通点は？これらの質問の答えになる視聴者の期待値要素を知ることで、YouTube成功の確率が一気に上がります！逆に言えば、視聴者の期待値要素を知らないのは、真っ暗な山道をライト無しでさまよっているようなもの。１本の動画を作るのに何時間もかかる、あの大変な努力が無駄になるリスクを抑えるためにも期待値要素は確実に把握しておきましょう。</p>
+        </div>
+        <div class="col-md-5 order-md-1">
+          <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+        </div>
+      </div>
+    </div>
+  </section>
+    <!-- <hr class="featurette-divider"> -->
+  <section class="section5">
+    <div class="container">
+      <br>
+      <h2 class="text-center offer-heading">これから必ず必要になる<br class="br-sp">新しい武器を提供したい!</h2>
+      <p>　これから、YouTubeで成功するにはデータを活用した分析が重要です。YouTube APIを利用して得た最新で正確な統計情報を元に、ジャンル決めや期待値要素の特定をサポートするのがこのサービス。普段使っているYouTube Analyticsでは得られない、他人のチャンネルデータから分析する業界初のツールとなっております。</p>
+    </div>
+  </section>
+
+  <section class="section6">
+    <div class="container">
+      <br>
+      <h2 class="text-center">必要なのは3つのステップ！</h3>
+      <br>
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h3 class="featurette-heading text-center">ステップ１:気になるジャンルの<br>チャンネルリストを用意</h3>
+          <p>自分のチャンネルのジャンル、または気になるジャンルのチャンネルリストを用意します。チャンネル名だけで構いません。また、一音一句正確である必要もありません。同じジャンル内に位置しているであろうチャンネルを思いつくままに書きとめてください。*現在、当サービスによるチャンネルリストの提供を検討しています。</p>
+        </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+        </div>
+      </div>
+
+      <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+          <h3 class="featurette-heading text-center">ステップ２:検索ボックスに入力し<br>最新の情報をゲット!</h3>
+          <p>用意したリストを検索ボックスに入力し、検索ボタンをクリック。入力されたキーワードをもとに、システムがチャンネルの統計データを表示します。</p>
+        </div>
+        <div class="col-md-5 order-md-1">
+          <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+        </div>
+      </div>
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h3 class="featurette-heading text-center">ステップ３:エクセルにダウンロードし<br>自由に分析！</h3>
+          <p>検索して得たデータを普段お使いのエクセルにダウンロードする機能も提供しております。</p>
+        </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section7">
+    <div class="container">
+      <br>
+      <div class="row">
+        <div class="col-lg-6 text-center">
+          <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+          <h4 class="text-center">ジャンルを決め切れていない<br>Aさんの場合</h4>
+          <p class="text-left">ジャンルによって需要（そのジャンルに興味がある視聴者の数）も変わってくる。例えば、英語を学べる動画はスペイン語を学ぶ動画よりも需要が大きい！気になるジャンルのリストを検索にかけ、ジャンルごとのトップYouTuberの登録者数や総再生数を比べてみよう！特定のジャンルの市場の大きさを把握できるよ！</p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-6 text-center">
+          <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+          <h4>期待値要素を特定したい、<br>Bさんの場合</h4>
+          <p class="text-left">一年未満のチャンネルだけでフィルターをかけ、総再生数順に並び替え。なぜ伸びているのかを考えながら、トップの３チャンネルの動画を３本ずつ見て共通点を探してみよう！現在の視聴者がどんな動画を期待しているのかわかってくるでしょう！</p>
+        </div><!-- /.col-lg-4 -->
+      </div><!-- /.row -->
+    </div>
+  </section>
+
+  <section class="section8">
+    <div class="container">
+      <br>
+      <br>
+      <h3>YouTubeで成功し、好きなことで生きていくと本気で考えている方、また自分のセンスだけではなくデータを活用していくことには価値があると考えている方だけに是非とも使っていただきたいと思っています。</h3>
+
+      <br>
+
+      <p>まずはログインを！</p>
+    </div>
+  </section>
+  <!-- /END THE FEATURETTES -->
 </main>
 <script type='text/javascript'>
   var nicknames = {{ nicknames|safe }};
