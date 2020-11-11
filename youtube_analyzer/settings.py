@@ -124,4 +124,9 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
+# django.contrib.humanize
 NUMBER_GROUPING = 3
+
+# stripe
+STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
+STRIPE_PUBLISHABLE_KEY = env('STRIPE_PUBLISHABLE_KEY')
