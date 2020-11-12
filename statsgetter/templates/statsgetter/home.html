@@ -5,12 +5,16 @@
 <section class="jumbotron text-center">
   <div class="container">
     <h1>データでチャンネル育成</h1>
-    <p class="lead text-muted">データを用いたチャンネル作りを支援します。<hiddn>
-    チャンネル名を入力して、統計データを得よう！</p>
+    <p class="lead text-muted">データを用いたチャンネル作りを支援します。
+    チャンネル名を入力して、統計データを得よう！<br>
+    <small>検索スピードは当システムが入力されたデータを学習することで向上します。<br>
+    初めて検索されるキーワードには時間がかかりますのでご了承ください。</small>
+    </p>
+
 
     <form class="mt-2 mt-md-0 text-center" method="POST">
       {% csrf_token %}
-      <input class="form-control mr-sm-2" type="text" name="search" placeholder="ヒカキン、フィッシャーズ、東海オンエア" aria-label="Search">
+      <input class="form-control mr-sm-2" type="text" name="search" placeholder="ヒカキン、水溜りボンド、東海オンエア" aria-label="Search">
       <button class="btn btn-outline-success my-2" type="submit">検索</button>
     </form>
     <div class="search-msg">
@@ -18,9 +22,7 @@
         <p>{% for no_such_element_error in no_such_element_errors %}{{no_such_element_error}}{% endfor %}</p>
       </div>
       <div class="nickname-msg" id="nickname-msg">
-        <p>{{request.user}}さんがこのサイトで{% for nickname in nicknames %}「{{nickname}}」{% endfor %}と検索した一番初めの人物です！<br>
-        キーワードが初めて検索されると、システムが学習をし、二回目以降の検索スピードを大幅に向上します！<br>
-        試しに{% for nickname in nicknames %}「{{nickname}}」{% endfor %}でもう一度検索してみてください！</p>
+        <p>{% for nickname in nicknames %}「{{nickname}}」{% endfor %}は初めて検索されたキーワードです。</p>
       </div>
     </div>
   </div>
