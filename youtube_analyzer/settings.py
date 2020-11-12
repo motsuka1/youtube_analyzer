@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'statsgetter.apps.StatsgetterConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,6 @@ NUMBER_GROUPING = 3
 # stripe
 STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
 STRIPE_PUBLISHABLE_KEY = env('STRIPE_PUBLISHABLE_KEY')
+
+# crispy-forms
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
