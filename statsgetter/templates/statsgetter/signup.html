@@ -1,4 +1,5 @@
 {% extends "statsgetter/main.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
   <br>
   <br>
@@ -10,24 +11,16 @@
           {% csrf_token %}
           <h2 class='text-center'>ユーザー登録</h2>
           <div class="form-group">
-            {{form.username.label}}
-            <br>
-            {{form.username}}
+            {{form.username|as_crispy_field  }}
           </div>
           <div class="form-group">
-            {{form.email.label}}
-            <br>
-            {{form.email}}
+            {{form.email|as_crispy_field}}
           </div>
           <div class="form-group">
-            {{form.password1.label}}
-            <br>
-            {{form.password1}}
+            {{form.password1|as_crispy_field}}
           </div>
           <div class="form-group">
-            {{form.password2.label}}
-            <br>
-            {{form.password2}}
+            {{form.password2|as_crispy_field}}
           </div>
           {{form.errors}}
           <div class="row justify-content-between align-items-center">
