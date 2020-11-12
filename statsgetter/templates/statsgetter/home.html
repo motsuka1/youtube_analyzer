@@ -4,20 +4,19 @@
 {% block content %}
 <section class="jumbotron text-center">
   <div class="container">
-    <h1>データでチャンネル育成</h1>
-    <p class="lead text-muted">データを用いたチャンネル作りを支援します。
-    チャンネル名を入力して、統計データを得よう！<br>
-    <small>検索スピードは当システムが入力されたデータを学習することで向上します。<br>
-    初めて検索されるキーワードには時間がかかりますのでご了承ください。</small>
-    </p>
-
+    <strong>成功しているチャンネルから学べる！</strong>
+    <h1>SANOU</h1>
+    <p class="lead text-muted sub-description">データに基づいたチャンネル作りをサポートします。<br>
+    気になるジャンルのチャンネルリストを入力して、<br class="br-sp">統計データを得よう！</p>
 
     <form class="mt-2 mt-md-0 text-center" method="POST">
       {% csrf_token %}
-      <input class="form-control mr-sm-2" type="text" name="search" placeholder="ヒカキン、水溜りボンド、東海オンエア" aria-label="Search">
+      <input class="form-control mr-sm-2" type="text" name="search" placeholder="ヒカキン、はじめしゃちょー、東海オンエア" aria-label="Search">
       <button class="btn btn-outline-success my-2" type="submit">検索</button>
     </form>
     <div class="search-msg">
+      <small class="slow-reason">当システムは入力されたデータを学習することで<br class="br-sp">検索スピードを向上します。<br>
+      初めて検索されるキーワードには時間がかかりますので<br class="br-sp">ご了承ください。</small>
       <div class="error-msg">
         <p>{% for no_such_element_error in no_such_element_errors %}{{no_such_element_error}}{% endfor %}</p>
       </div>
