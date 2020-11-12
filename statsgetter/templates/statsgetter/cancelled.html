@@ -1,0 +1,11 @@
+{% extends "statsgetter/main.html" %}
+{% load static %}
+{% block content %}
+  <section class="section">
+    <div class="container text-center">
+      <br>
+      <p>支払いがキャンセルされました。</p>
+      <a href="{% url 'price' %}">購入ページへ戻る</a>
+    </div>
+  </section>
+{% endblock %}
