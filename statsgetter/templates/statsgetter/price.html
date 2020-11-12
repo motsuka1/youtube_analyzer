@@ -16,7 +16,7 @@
         <h1 class="card-title pricing-card-title">￥- <small class="text-muted">/ 月</small></h1>
         <ul class="list-unstyled mt-3 mb-4">
         </ul>
-        <button type="button" class="btn btn-lg btn-block btn-primary">支払い画面へ</button>
+        <button type="button" class="btn btn-lg btn-block btn-primary" id="payment-btn">支払い画面へ</button>
       </div>
     </div>
     <div class="card mb-4 shadow-sm">
@@ -27,7 +27,7 @@
         <h1 class="card-title pricing-card-title">￥- <small class="text-muted">/ 月</small></h1>
         <ul class="list-unstyled mt-3 mb-4">
         </ul>
-        <button type="button" class="btn btn-lg btn-block btn-primary">支払い画面へ</button>
+        <button type="button" class="btn btn-lg btn-block btn-primary" id="payment-btn">支払い画面へ</button>
       </div>
     </div>
     <div class="card mb-4 shadow-sm">
@@ -38,7 +38,7 @@
         <h1 class="card-title pricing-card-title">￥- <small class="text-muted">/ 月</small></h1>
         <ul class="list-unstyled mt-3 mb-4">
         </ul>
-        <button type="button" class="btn btn-lg btn-block btn-primary">支払い画面へ</button>
+        <button type="button" class="btn btn-lg btn-block btn-primary" id="payment-btn">支払い画面へ</button>
       </div>
     </div>
   </div>
@@ -49,5 +49,27 @@
 
 <script type='text/javascript'>
   console.log('success')
+  <!-- // Get Stripe publishable key -->
+  fetch("/config/")
+  .then((result) => { return result.json(); })
+  .then((data) => {
+    <!-- // Initialize Stripe.js -->
+    const stripe = Stripe(data.publicKey);
+
+    <!-- // Event handler -->
+    document.getElementById("payment-btn").addEventListener("click", () => {
+    <!-- // Get Checkout Session ID -->
+    fetch("/create-checkout-session/")
+    .then((result) => { return result.json(); })
+    .then((data) => {
+      console.log(data);
+      <!-- // Redirect to Stripe Checkout -->
+      return stripe.redirectToCheckout({sessionId: data.sessionId})
+    })
+    .then((res) => {
+      console.log(res);
+    });
+  });
+});
 </script>
 {% endblock content %}
