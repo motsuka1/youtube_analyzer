@@ -72,8 +72,11 @@ def home(request):
             pass
         # when users search
         else:
-            stats_last = Statistics.objects.latest('id')
-            last_transaction_id = stats_last.transaction_id
+            try:
+                stats_last = Statistics.objects.latest('id')
+                last_transaction_id = stats_last.transaction_id
+            except:
+                last_transaction_id = 0
 
             # get stats for the serached channel titles
             for channel_title in channel_titles:
