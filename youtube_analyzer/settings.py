@@ -128,6 +128,8 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # django.contrib.humanize
 NUMBER_GROUPING = 3
 
