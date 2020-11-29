@@ -10,19 +10,30 @@ class YTscraper:
 
     def get_channel_id_or_username_from_title(self):
         chrome_options = webdriver.ChromeOptions()
-        '''will use in heroku below'''
-        # chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+        # the environment variable is stored in heroku
+        chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
         chrome_options.add_argument("--headless")
-        # chrome_options.add_argument("--disable-dev-shm-usage")
-        # chrome_options.add_argument("--no-sandbox")
-        # chrome_options.add_argument(' -- incognito')
-        driver = webdriver.Chrome(chrome_options=chrome_options) #executable_path=os.environ.get("CHROMEDRIVER_PATH"),
+        chrome_options.add_argument(' -- incognito')
+        # the 2 lines below are for running on docker
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--no-sandbox")
+        # can minimize time consumption. Reference: https://github.com/dinuduke/Selenium-chrome-firefox-tips
+        prefs = {
+        "profile.managed_default_content_settings.images":2,
+        "profile.default_content_setting_values.notifications":2,
+        "profile.managed_default_content_settings.stylesheets":2,
+        "profile.managed_default_content_settings.cookies":2,
+        "profile.managed_default_content_settings.javascript":1,
+        "profile.managed_default_content_settings.plugins":1,
+        "profile.managed_default_content_settings.popups":2,
+        "profile.managed_default_content_settings.geolocation":2,
+        "profile.managed_default_content_settings.media_stream":2,
+        }
+        chrome_options.add_experimental_option("prefs",prefs)
+        driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+
 
         # get to the search result in youtube
-        '''
-        might be faster to use beautiful soup.
-        only concern is that I might need 'scrolling' to implement the feature to get data of seo
-        '''
         url = "https://www.youtube.com/results?search_query=" + self.channel_title
         driver.get(url)
 
@@ -40,4 +51,4 @@ class YTscraper:
                 driver.quit()
                 return [False, channel_username]
         except NoSuchElementException:
-            return 
+            return
