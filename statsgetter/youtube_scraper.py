@@ -1,7 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
-
 import os
 
 class YTscraper:
@@ -10,8 +9,6 @@ class YTscraper:
 
     def get_channel_id_or_username_from_title(self):
         chrome_options = webdriver.ChromeOptions()
-        # the environment variable is stored in heroku
-        chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
         chrome_options.add_argument("--headless")
         chrome_options.add_argument(' -- incognito')
         # the 2 lines below are for running on docker
@@ -30,7 +27,13 @@ class YTscraper:
         "profile.managed_default_content_settings.media_stream":2,
         }
         chrome_options.add_experimental_option("prefs",prefs)
-        driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+
+        try:
+            # the 2 lines are used in heroku
+            chrome_options.binary_location=os.environ.get("GOOGLE_CHROME_BIN")
+            driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+        except:
+            driver = webdriver.Chrome(chrome_options=chrome_options)
 
 
         # get to the search result in youtube
