@@ -1,0 +1,158 @@
+{% load static %}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px;
+}
+
+.jumbotron {
+  background-color: #eee;
+}
+
+.featurette-image-problem {
+  width: 450px;
+  height: 300px;
+  margin-bottom: 10px;
+}
+
+.featurette-image-affinity-1 {
+  width: 502px;
+  height: 335px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.featurette-image-affinity-2 {
+  width: 640px;
+  height: 360px;
+  margin-bottom: 10px;
+}
+
+.featurette-image-solution-1 {
+  width: 330px;
+  height: 290px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.featurette-image-solution-2 {
+  width: 690px;
+  height: 220px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.featurette-image-solution-3 {
+  width: 502px;
+  height: 335px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.greet-user {
+  color: #000000;
+}
+
+.rounded-circle {
+  border: 3px solid #cccfcd;
+}
+
+.up {
+  object-position:-30px -3px;
+}
+
+.famous {
+  object-position:0px 6px;
+}
+
+.money {
+  object-position:-9px 5px;
+}
+
+.section2{
+  background-color: #eee;
+}
+
+.section4{
+  background-color: #eee;
+}
+
+.section6{
+  background-color: #eee;
+}
+
+.section8{
+  background-color: #eee;
+}
+
+.asteriskField {
+    display: none;
+}
+
+/* // 大デバイス（デスクトップ, 1200px 未満） */
+@media (min-width: 992px) {
+  p {
+   font-size: 1.25rem;
+  }
+
+  .problem-text {
+    font-size: 1.2rem;
+  }
+
+  .br-sp {
+    display:none;
+  }
+
+  .featurette-image-affinity-2 {
+    margin-top: 100px;
+  }
+}
+/* // 中デバイス（タブレット, 992px 未満） */
+@media (max-width: 991.98px) {
+}
+
+/* // 小デバイス（横向きモバイル, 768px 未満） */
+@media (max-width: 767.98px) {
+ h1 {
+   font-size: 1.9rem;
+ }
+ h2 {
+   font-size: 1.5rem;
+ }
+ h3 {
+   font-size: 1.2rem;
+ }
+ h4 {
+   font-size: 1.1rem;
+ }
+
+ .br-pc {
+   display:none;
+ }
+
+ .br-sp {
+   display:none;
+ }
+
+ .sub-description {
+   font-size: 0.8rem;
+ }
+
+ .slow-reason {
+   font-size: 0.7rem;
+ }
+
+}
+/* // @include media-breakpoint-up(sm) { */
+/* // 極小デバイス（縦向きモバイル, 576px 未満） */
+@media (max-width: 575.98px) {
+ .br-sp {
+   display:block;
+ }
+
+ .excel-btn {
+   margin-right: 10px;
+ }
+}
