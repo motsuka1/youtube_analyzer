@@ -72,8 +72,11 @@ def home(request):
             pass
         # when users search
         else:
-            stats_last = Statistics.objects.latest('id')
-            last_transaction_id = stats_last.transaction_id
+            try:
+                stats_last = Statistics.objects.latest('id')
+                last_transaction_id = stats_last.transaction_id
+            except:
+                last_transaction_id = 0
 
             # get stats for the serached channel titles
             for channel_title in channel_titles:
@@ -83,7 +86,7 @@ def home(request):
                     no_such_element_errors.append("「" + channel_title + "」" + "でチャンネルが見つかりませんでした。")
                 else:
                     for result in results:
-                        registered_date = datetime.datetime.strptime(result["snippet"]["publishedAt"], "%Y-%m-%dT%H:%M:%SZ")
+                        registered_date = iso_to_python_dt(result["snippet"]["publishedAt"])
                         registered_date = registered_date.strftime("%Y-%m-%d")
                         channel_stats = {
                             'title' : result["snippet"]["title"],
@@ -218,3 +221,16 @@ def success(request):
 
 def cancelled(request):
     return render(request, 'statsgetter/cancelled.html')
+
+def iso_to_python_dt(iso_str):
+    dt = None
+    try:
+        # for the newer videos which have microseconds
+        dt = datetime.datetime.strptime(iso_str, "%Y-%m-%dT%H:%M:%S.%fZ")
+    except ValueError:
+        try:
+            # for the older videos which do not have microseconds
+            dt = registered_date = datetime.datetime.strptime(iso_str, "%Y-%m-%dT%H:%M:%SZ")
+        except ValueError:
+            pass
+    return dt
